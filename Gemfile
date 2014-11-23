@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
-#gem "rugged"
-gem "github-linguist", require: 'linguist'
+gem 'github-linguist', '4.0.3', require: 'linguist'
+gem "rugged"

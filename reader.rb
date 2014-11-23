@@ -9,7 +9,7 @@ class Reader
     @repo = Rugged::Repository.new(path)
     @toc = StringIO.new
     @body = StringIO.new
-    @linguist = Linguist::Repository.new(repo, repo.head.target_id)
+    @linguist = Linguist::Repository.new(@repo, @repo.head.target_id)
     @file_languages = @linguist.breakdown_by_file.map do|lang, files|
       files.map.each do|f|
         lang = Linguist::Language::find_by_name("Ruby")
