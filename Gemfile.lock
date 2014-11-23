@@ -1,0 +1,25 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    charlock_holmes (0.7.3)
+    escape_utils (1.0.1)
+    github-linguist (3.5.2)
+      charlock_holmes (~> 0.7.3)
+      escape_utils (~> 1.0.1)
+      mime-types (~> 1.19)
+      pygments.rb (~> 0.6.0)
+      rugged (~> 0.21.1b2)
+    mime-types (1.25.1)
+    posix-spawn (0.3.9)
+    pygments.rb (0.6.0)
+      posix-spawn (~> 0.3.6)
+      yajl-ruby (~> 1.1.0)
+    rugged (0.21.2)
+    yajl-ruby (1.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  github-linguist
+  rugged
