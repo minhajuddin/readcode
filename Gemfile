@@ -1,5 +1,4 @@
-# A sample Gemfile
 source "https://rubygems.org"
 
-gem "github-linguist"
-gem "rugged"
+#gem "rugged"
+gem "github-linguist", require: 'linguist'

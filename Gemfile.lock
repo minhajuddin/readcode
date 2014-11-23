@@ -22,4 +22,3 @@ PLATFORMS
 
 DEPENDENCIES
   github-linguist
-  rugged
