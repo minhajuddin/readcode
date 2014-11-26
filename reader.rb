@@ -6,8 +6,7 @@ class Reader
   PROTOCOLRX = %r{^(git|http|https)://}
   attr_reader :remote_path, :dir, :repo, :outpath
 
-  PUBLIC_DIR = "/tmp"
-  #PUBLIC_DIR = File.dirname(File.expand_path(__FILE__))
+  PUBLIC_DIR = File.join(File.dirname(File.expand_path(__FILE__)), "public")
   HEADER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "header.html"))
   FOOTER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "footer.html"))
 
@@ -109,12 +108,7 @@ class Reader
   def lexer_for(path)
     p = File.join(@dir, path)
     lng = Linguist::FileBlob.new(p).language
-    if lng
-      puts "lexer for #{p} is #{lng.name}"
-      return lng.name
-    end
-
-    puts "lexer for #{p} NOT FOUND"
+    return lng.name if lng
   end
 
 end
