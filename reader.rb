@@ -8,13 +8,17 @@ class Reader
   attr_reader :remote_path, :dir, :repo
 
   PUBLIC_DIR = File.dirname(File.expand_path(__FILE__))
+  HEADER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "header.html"))
+  FOOTER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "footer.html"))
 
   def initialize(remote_path)
     @remote_path = remote_path
     @dir = Dir.mktmpdir('readcode')
-    filepath = @remote_path.gsub(%r{^(git|http|https)://},'').gsub('/', '.') + ".html"
-    @toc = File.open(File.join(PUBLIC_DIR, filepath + ".toc"), "w")
-    @code = File.open(File.join(PUBLIC_DIR, filepath + ".code"), "w")
+    @name = @remote_path.gsub(%r{^(git|http|https)://},'')
+    @filepath = @name.gsub('/', '.') + ".html"
+    @toc = Tempfile.new(@filepath + ".code")
+    @code = Tempfile.new(@filepath + ".code")
+    @outpath = File.join(PUBLIC_DIR, @filepath)
   end
 
   def export
@@ -31,6 +35,25 @@ class Reader
   end
 
   def write
+    File.open(@outpath, "w") do |f|
+      #write header
+      f.write HEADER.gsub("REPONAME", @name)
+      #write toc
+      @toc.rewind
+      @toc.each_line do |l|
+        f.write l
+      end
+      #write code
+      @code.rewind
+      @code.each_line do |l|
+        f.write l
+      end
+      #write footer
+      f.write FOOTER.gsub("REPONAME", @name)
+    end
+
+    @toc.unlink
+    @code.unlink
   end
 
   def render
@@ -43,7 +66,7 @@ class Reader
   end
 
   def write_tree(tree)
-    @toc.write "<ul>"
+    @toc.puts "<ul>"
     #write all the blobs first
     tree.each_blob do |b|
       write_blob b
@@ -53,12 +76,12 @@ class Reader
     tree.each_tree do |t|
       write_tree t
     end
-    @toc.write "</ul>"
+    @toc.puts "</ul>"
   end
 
   def write_blob(blob)
     obj =  @repo.lookup(blob[:oid])
-    @toc.write "<li>#{blob[:name]} #{"[binary]" if obj.binary?}</li>"
+    @toc.write "<li>#{blob[:name]}#{" [binary]" if obj.binary?}</li>"
     return if obj.binary? #ignore binary objects
 
     @code.puts "<pre><code>#{CGI.escapeHTML(obj.text)}</code></pre>"
