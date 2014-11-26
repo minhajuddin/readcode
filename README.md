@@ -23,7 +23,8 @@
 ## Tech
   readcode couldn't have been built without standing on the shoulders of these
   giants:
-    - [Rugged/libgit2](https://github.com/libgit2/rugged) for the git interface
-    - [Pygments](http://pygments.org/) for syntax highlighting
-    - [Linguist](https://github.com/github/linguist) for identifying the language
-    - [Sinatra](http://www.sinatrarb.com/) for the web framework
+
+  - [Rugged/libgit2](https://github.com/libgit2/rugged) for the git interface
+  - [Pygments](http://pygments.org/) for syntax highlighting
+  - [Linguist](https://github.com/github/linguist) for identifying the language
+  - [Sinatra](http://www.sinatrarb.com/) for the web framework
