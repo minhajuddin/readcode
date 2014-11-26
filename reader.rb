@@ -61,33 +61,39 @@ class Reader
     puts "rendering"
 
     #write all trees recursively
-    write_tree @master
+    write_tree "", @master
 
     puts "rendering done"
   end
 
-  def write_tree(tree)
+  def write_tree(root, tree)
+    if root != ""
+      @toc.puts "<li>"
+      @toc.puts "<h4>#{root}</h4>"
+    end
     @toc.puts "<ul>"
     #write all the blobs first
     tree.each_blob do |b|
-      write_blob tree, b
+      write_blob root, b
     end
 
     #recursively write all the trees
     tree.each_tree do |t|
-      write_tree @repo.lookup(t[:oid])
+      write_tree File.join(root, t[:name]), @repo.lookup(t[:oid])
     end
     @toc.puts "</ul>"
+    @toc.puts "</li>" if root != ""
   end
 
-  def write_blob(tree, blob)
+  def write_blob(root, blob)
     obj =  @repo.lookup(blob[:oid])
     name = blob[:name]
-    @toc.write "<li>#{name}#{" [binary]" if obj.binary?}</li>"
+    path = File.join(root, name)
+
+    @toc.write "<li><a href='##{path}'>#{name}#{" [binary]" if obj.binary?}</a></li>"
     return if obj.binary? #ignore binary objects
 
-
-    @code.puts "<h3 id='#{name}'><a href='##{name}'>#{name}</a></h3>"
+    @code.puts "<h3 id='#{path}'><a href='##{path}'>#{path}</a></h3>"
     @code.puts "<pre><code>#{CGI.escapeHTML(obj.text)}</code></pre>"
   end
 
