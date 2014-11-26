@@ -5,9 +5,10 @@ require 'pygments'
 require 'tempfile'
 
 class Reader
-  attr_reader :remote_path, :dir, :repo
+  attr_reader :remote_path, :dir, :repo, :outpath
 
-  PUBLIC_DIR = File.dirname(File.expand_path(__FILE__))
+  PUBLIC_DIR = "/tmp"
+  #PUBLIC_DIR = File.dirname(File.expand_path(__FILE__))
   HEADER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "header.html"))
   FOOTER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "footer.html"))
 
@@ -62,28 +63,31 @@ class Reader
     #write all trees recursively
     write_tree @master
 
-    puts "done"
+    puts "rendering done"
   end
 
   def write_tree(tree)
     @toc.puts "<ul>"
     #write all the blobs first
     tree.each_blob do |b|
-      write_blob b
+      write_blob tree, b
     end
 
     #recursively write all the trees
     tree.each_tree do |t|
-      write_tree t
+      write_tree @repo.lookup(t[:oid])
     end
     @toc.puts "</ul>"
   end
 
-  def write_blob(blob)
+  def write_blob(tree, blob)
     obj =  @repo.lookup(blob[:oid])
-    @toc.write "<li>#{blob[:name]}#{" [binary]" if obj.binary?}</li>"
+    name = blob[:name]
+    @toc.write "<li>#{name}#{" [binary]" if obj.binary?}</li>"
     return if obj.binary? #ignore binary objects
 
+
+    @code.puts "<h3 id='#{name}'><a href='##{name}'>#{name}</a></h3>"
     @code.puts "<pre><code>#{CGI.escapeHTML(obj.text)}</code></pre>"
   end
 
