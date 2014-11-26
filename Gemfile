@@ -6,5 +6,7 @@ gem 'rugged', '0.22.0b2'
 gem 'pygments.rb'
 
 #web
-gem 'sinatra'
-gem 'thin'
+group :web do
+  gem 'sinatra'
+  gem 'thin'
+end

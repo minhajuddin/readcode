@@ -1,11 +1,9 @@
 require 'stringio'
 require 'cgi'
-require 'rugged'
-require 'pygments'
-require 'linguist'
 require 'tempfile'
 
 class Reader
+  PROTOCOLRX = %r{^(git|http|https)://}
   attr_reader :remote_path, :dir, :repo, :outpath
 
   PUBLIC_DIR = "/tmp"
@@ -16,7 +14,7 @@ class Reader
   def initialize(remote_path)
     @remote_path = remote_path
     @dir = Dir.mktmpdir('readcode')
-    @name = @remote_path.gsub(%r{^(git|http|https)://},'')
+    @name = @remote_path.gsub(Reader::PROTOCOLRX,'')
     @filepath = @name.gsub('/', '.') + ".html"
     @toc = Tempfile.new(@filepath + ".code")
     @code = Tempfile.new(@filepath + ".code")
@@ -27,6 +25,7 @@ class Reader
     clone
     render
     write
+    outpath
   end
 
   private

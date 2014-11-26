@@ -1,5 +1,5 @@
 require 'bundler'
-Bundler.setup(:default)
+Bundler.require(:default)
 require './reader'
 
 reader = Reader.new("git://github.com/minhajuddin/readcode")
