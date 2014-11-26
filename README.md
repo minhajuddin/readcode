@@ -4,3 +4,5 @@
   - Allow ignoring of files, e.g. ?/vendor
   - A badge to link to the source similar to godoc
   - Sourcegraph examples
+  - Epub/PDF/Mobi format export
+  - Syntax highlighting
