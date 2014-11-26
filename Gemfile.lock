@@ -1,8 +1,16 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    charlock_holmes (0.7.3)
     daemons (1.1.9)
+    escape_utils (1.0.1)
     eventmachine (1.0.3)
+    github-linguist (4.0.3)
+      charlock_holmes (~> 0.7.3)
+      escape_utils (~> 1.0.1)
+      mime-types (>= 1.19)
+      rugged (~> 0.22.0b1)
+    mime-types (2.4.3)
     posix-spawn (0.3.9)
     pygments.rb (0.6.0)
       posix-spawn (~> 0.3.6)
@@ -26,6 +34,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  github-linguist (= 4.0.3)
   pygments.rb
   rugged (= 0.22.0b2)
   sinatra

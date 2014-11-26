@@ -2,6 +2,7 @@ require 'stringio'
 require 'cgi'
 require 'rugged'
 require 'pygments'
+require 'linguist'
 require 'tempfile'
 
 class Reader
@@ -40,15 +41,19 @@ class Reader
       #write header
       f.write HEADER.gsub("REPONAME", @name)
       #write toc
+      f.puts "<div class=toc>"
       @toc.rewind
       @toc.each_line do |l|
         f.write l
       end
+      f.puts "</div>"
       #write code
+      f.puts "<div class=code>"
       @code.rewind
       @code.each_line do |l|
         f.write l
       end
+      f.puts "</div>"
       #write footer
       f.write FOOTER.gsub("REPONAME", @name)
     end
@@ -90,11 +95,27 @@ class Reader
     name = blob[:name]
     path = File.join(root, name)
 
-    @toc.write "<li><a href='##{path}'>#{name}#{" [binary]" if obj.binary?}</a></li>"
+    @toc.puts "<li><a href='##{path}'>#{name}#{" [binary]" if obj.binary?}</a></li>"
     return if obj.binary? #ignore binary objects
 
-    @code.puts "<h3 id='#{path}'><a href='##{path}'>#{path}</a></h3>"
-    @code.puts "<pre><code>#{CGI.escapeHTML(obj.text)}</code></pre>"
+    lexer = lexer_for(path)
+    @code.puts "<h3 id='#{path}'><a title='#{lexer || "Text"} file' href='##{path}'>#{path}</a></h3>"
+    @code.puts highlight(obj.text, lexer)
+  end
+
+  def highlight(code, lexer)
+    Pygments.highlight(code, lexer: lexer && Pygments.lexers.key?(lexer) ? lexer : "Text")
+  end
+
+  def lexer_for(path)
+    p = File.join(@dir, path)
+    lng = Linguist::FileBlob.new(p).language
+    if lng
+      puts "lexer for #{p} is #{lng.name}"
+      return lng.name
+    end
+
+    puts "lexer for #{p} NOT FOUND"
   end
 
 end
