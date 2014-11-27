@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "restarting readcode"
+stop readcode
+start readcode

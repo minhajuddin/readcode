@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+oldrev, newrev = ARGV
+
+def run(cmd)
+  exit($?.exitstatus) unless system "umask 002 && #{cmd}"
+end
+
+# update gem bundle
+run "bundle install --deployment"
