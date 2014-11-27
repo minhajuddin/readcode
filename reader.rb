@@ -7,14 +7,13 @@ class Reader
   attr_reader :remote_path, :dir, :repo, :outpath
 
   PUBLIC_DIR = File.join(File.dirname(File.expand_path(__FILE__)), "public")
-  TMP_DIR = File.join(File.dirname(File.expand_path(__FILE__)), "tmp")
   HEADER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "header.html"))
   FOOTER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "footer.html"))
 
   def initialize(remote_path)
     @remote_path = remote_path
+    @dir = Dir.mktmpdir('readcode')
     @name = @remote_path.gsub(Reader::PROTOCOLRX,'')
-    @dir = File.join(TMP_DIR, "repos", @name)
     @filepath = @name.gsub('/', '.') + ".html"
     @toc = Tempfile.new(@filepath + ".code")
     @code = Tempfile.new(@filepath + ".code")
@@ -25,6 +24,7 @@ class Reader
     clone
     render
     write
+    FileUtils.rm_f(@dir) #remove the repo
     outpath
   end
 
