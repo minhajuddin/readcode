@@ -1,0 +1,10 @@
+---
+environment: production
+chdir: /opt/www/readcode
+socket: tmp/thin.sock
+pid: tmp/thin.pid
+rackup: config.ru
+log: log/thin.log
+max_conns: 1024
+timeout: 30
+max_persistent_conns: 100

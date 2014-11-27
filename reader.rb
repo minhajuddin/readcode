@@ -7,17 +7,18 @@ class Reader
   attr_reader :remote_path, :dir, :repo, :outpath
 
   PUBLIC_DIR = File.join(File.dirname(File.expand_path(__FILE__)), "public")
+  TMP_DIR = File.join(File.dirname(File.expand_path(__FILE__)), "tmp")
   HEADER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "header.html"))
   FOOTER = File.read(File.join(File.dirname(File.expand_path(__FILE__)), "footer.html"))
 
   def initialize(remote_path)
     @remote_path = remote_path
-    @dir = Dir.mktmpdir('readcode')
     @name = @remote_path.gsub(Reader::PROTOCOLRX,'')
+    @dir = File.join(TMP_DIR, "repos", @name)
     @filepath = @name.gsub('/', '.') + ".html"
     @toc = Tempfile.new(@filepath + ".code")
     @code = Tempfile.new(@filepath + ".code")
-    @outpath = File.join(PUBLIC_DIR, @filepath)
+    @outpath = File.join(PUBLIC_DIR, @name)
   end
 
   def export
@@ -35,6 +36,8 @@ class Reader
   end
 
   def write
+    #make the parent dir
+    FileUtils.mkdir_p(File.dirname(@outpath))
     File.open(@outpath, "w") do |f|
       #write header
       f.write HEADER.gsub("REPONAME", @name)
