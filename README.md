@@ -1,6 +1,8 @@
 # readcode http://readcode.in/
 
-![donations ](https://img.shields.io/bountysource/team/readcode/activity.svg)
+[![Donate](http://img.shields.io/badge/donate-$5-brightgreen.svg)](https://www.bountysource.com/cart?amount=5&currency=USD&team_id=readcode)
+[![Donate](http://img.shields.io/badge/donate-$10-brightgreen.svg)](https://www.bountysource.com/cart?amount=10&currency=USD&team_id=readcode)
+
 
 ## Core TODO
   - [x] Allows you to read all the code of any repository on a single page
