@@ -1,5 +1,7 @@
 # readcode http://readcode.in/
 
+![donations ](https://img.shields.io/bountysource/team/readcode/activity.svg)
+
 ## Core TODO
   - [x] Allows you to read all the code of any repository on a single page
   - [x] Syntax highlighting
