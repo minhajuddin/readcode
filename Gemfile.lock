@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    beaneater (0.3.2)
     charlock_holmes (0.7.3)
     daemons (1.1.9)
     escape_utils (1.0.1)
@@ -34,6 +35,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  beaneater
   github-linguist (= 4.0.3)
   pygments.rb
   rugged (= 0.22.0b2)

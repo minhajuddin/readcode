@@ -1,3 +1,5 @@
+require 'bundler'
+Bundler.require(:default)
 require './reader'
 
 # Connect to pool
@@ -5,14 +7,22 @@ require './reader'
 # Enqueue jobs to tube
 @tube = @beanstalk.tubes["readcode"]
 
+@listen = true
+def close
+  puts "received interrupt"
+  @listen = false
+  # Disconnect the pool
+  puts 'closing beanstalk'
+  @beanstalk.close
+  exit
+end
+
 #handle interrupts
 trap 'SIGINT' do
-  # Disconnect the pool
-  @beanstalk.close
+  close
 end
 trap 'SIGTERM' do
-  # Disconnect the pool
-  @beanstalk.close
+  close
 end
 
 
@@ -22,17 +32,22 @@ def render(path)
 
   reader = Reader.new(path)
   begin
-    out = reader.export
-    send_file out
+    reader.export
   rescue => ex
     puts ex
   end
 end
 
+puts "listening for jobs"
 # Process jobs from tube
-while job = @tube.reserve
+while @listen
   begin
-    render(job)
+    job = @tube.reserve(1)
+  rescue Beaneater::TimedOutError
+    next
+  end
+  begin
+    render(job.body)
   rescue => ex
     puts "ERROR rendering #{job.inspect} #{ex.inspect}"
   ensure

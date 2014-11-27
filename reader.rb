@@ -17,14 +17,14 @@ class Reader
     @filepath = @name.gsub('/', '.') + ".html"
     @toc = Tempfile.new(@filepath + ".code")
     @code = Tempfile.new(@filepath + ".code")
-    @outpath = File.join(PUBLIC_DIR, @name)
+    @outpath = File.join(PUBLIC_DIR, @name + ".html")
   end
 
   def export
     clone
     render
     write
-    FileUtils.rm_f(@dir) #remove the repo
+    FileUtils.rm_rf(@dir) #remove the repo
     outpath
   end
 
