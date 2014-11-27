@@ -1,27 +1,30 @@
-@beanstalk = Beaneater::Pool.new(['localhost:11300'])
+beanstalk = Beaneater::Pool.new(['localhost:11300'])
 # Enqueue jobs to tube
-@tube = @beanstalk.tubes["readcode"]
+$tube = beanstalk.tubes["readcode"]
 
 #display the home page
-get '/' do
-  if params.key?("repo")
-    redirect to("/r/#{params['repo']}")
+get '/*' do
+
+  #if it was a form submission redirect
+  #to the canonical path
+  if params.key?('repo')
+    redirect to("/#{params['repo']}")
     return
   end
 
-  erb :index
-end
+  repo = params[:splat].first
 
-#trigger repo render
-get '/r/*' do
-  repo = params[:splat].first.to_s
-  return erb(:error) if repo.include?("..")
+  return erb(:index) unless repo
+
   #TODO add validations on path to avoid getting pwned
+  return erb(:error) if repo.include?("..")
+
   #if the code reaches this, it means there is no cache
-  @tube.put repo
+  #enque it on beanstalk and let the worker take care of it
+  $tube.put repo
 
   @path = request.path_info
-  erb :rendering
+  erb(:rendering)
 end
 
 #TODO refresh action

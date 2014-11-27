@@ -105,7 +105,12 @@ class Reader
   end
 
   def highlight(code, lexer)
-    Pygments.highlight(code, lexer: lexer && Pygments.lexers.key?(lexer) ? lexer : "Text")
+    begin
+      Pygments.highlight(code, lexer: lexer && Pygments.lexers.key?(lexer) ? lexer : "Text")
+    rescue => ex
+      puts ex.inspect
+      return code
+    end
   end
 
   def lexer_for(path)
