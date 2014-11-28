@@ -6,22 +6,26 @@
   <link href="/main.css" rel="stylesheet" type='text/css' />
 </head>
 <body>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-57187633-1', 'auto');
-  ga('send', 'pageview');
-</script>
-<h1>Readcode</h1>
-<form>
-  <input placeholder='e.g. github.com/minhajuddin/readcode' type=text name=repo style='width: 400px;padding:5px;'/>
-  <button type='submit' class='submit'>Read</button>
-</form>
+    ga('create', 'UA-57187633-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <div id="wrapper">
+    <h1>readcode</h1>
 
-<p>
-  Built by <a href='http://twitter.com/minhajuddin'>@minhajuddin</a>
-</p>
+    <div id="content">
+      <form>
+        <input placeholder="e.g. github.com/minhajuddin/readcode" type="text" name="repo" id="repo">
+        <button type="submit" class="submit">Read</button>
+      </form>
+    </div>
+    <div id="footer">
+      Built by <a href="http://twitter.com/minhajuddin">@minhajuddin</a>
+    </div>
+  </div>
 </body>

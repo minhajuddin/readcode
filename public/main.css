@@ -1,5 +1,10 @@
 body{ background-color: #36372F; font-family: 'Open Sans', sans-serif; font-weight: 400; color: #eee;}
-h1{font-size: 0.8em;}
-input, button{font-size: 1.2em;}
-button{padding: 5px;}
+input, button{padding:5px;font-size: 2.5em;}
+input {width: 700px;}
+button{padding: 5px; width: 180px;}
 a{color: #ddd; text-decoration: none;}
+#wrapper{width: 900px; margin: 0 auto;}
+#content { min-height: 200px}
+h1{ font-size: 4em; text-align: center; margin-top: 100px; text-transform: lowercase;}
+form{text-align:center; }
+#footer{text-align: center;}
