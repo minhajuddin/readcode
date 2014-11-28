@@ -14,7 +14,7 @@ get '/*' do
 
   repo = params[:splat].first
 
-  return erb(:index) unless repo
+  return erb(:index) if repo.to_s.empty?
 
   #TODO add validations on path to avoid getting pwned
   return erb(:error) if repo.include?("..")

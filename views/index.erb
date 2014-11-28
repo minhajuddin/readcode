@@ -1,9 +1,22 @@
 <!doctype html>
 <head>
   <title> readcode </title>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+    body{ background-color: #36372F; font-family: 'Open Sans', sans-serif; font-weight: 400; color: #eee;}
+    h1{font-size: 0.8em;}
+    input, button{font-size: 1.2em;}
+    button{padding: 5px;}
+    a{color: #ddd; text-decoration: none;}
+  </style>
 </head>
+<h1>Readcode</h1>
 <form>
-  Repository <input type=text name=repo />
+  <input placeholder='e.g. github.com/minhajuddin/readcode' type=text name=repo style='width: 400px;padding:5px;'/>
   <button type='submit' class='submit'>Read</button>
 </form>
+
+<p>
+  Built by <a href='http://twitter.com/minhajuddin'>@minhajuddin</a>
+</p>
