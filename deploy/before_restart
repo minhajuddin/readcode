@@ -6,4 +6,4 @@ def run(cmd)
 end
 
 # update gem bundle
-run "bundle install --deployment"
+run "/opt/rubies/2.1.2/bin/ruby bundle install"
