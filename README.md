@@ -18,7 +18,11 @@
   - [ ] Sourcegraph examples
   - [ ] Epub/PDF/Mobi format export
   - [ ] Ability to choose a theme from pygment themes
-  - [ ] Add a gittip button
+  - [ ] Add ability to minimize folders (reddit tree style)
+  - [ ] Add post processors for specific types of repositories/files. e.g. a go
+    file should allow clicking on the imports and browsing to the imports
+    repository.
+  - [ ] Use go oracle and sourcegraph for go repos
 
 ## Design TODO
   - [ ] Make the site look nicer and responsive
