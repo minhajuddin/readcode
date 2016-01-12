@@ -8,3 +8,4 @@ a{color: #ddd; text-decoration: none;}
 h1{ font-size: 4em; text-align: center; margin-top: 100px; text-transform: lowercase;}
 form{text-align:center; }
 #footer{text-align: center;}
+.highlight{width: 98%; word-wrap: break-word;}
